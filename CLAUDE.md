@@ -1,23 +1,70 @@
-# CLAUDE.md
+# CLAUDE.md — Voidboard Project Briefing
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> Этот файл — брифинг для Claude на старт каждой сессии.
+> Кидай его в начале беседы чтобы восстановить контекст без лишних объяснений.
 
-## Project
+---
 
-**void-board** — a web application (details TBD).
+## Продукт
 
-## Build & Development Commands
+**Voidboard** — issue трекер, учебный проект (MVP).
+Входит в экосистему **Nebulance** (подробнее в IDEA.md).
 
-<!-- Update these as the project is set up -->
-<!-- Example:
-npm install        # install dependencies
-npm run dev        # start dev server
-npm run build      # production build
-npm run lint       # lint
-npm test           # run all tests
-npm test -- --grep "test name"  # run a single test
--->
+Слоган: *"Tools that orbit your workflow"*
 
-## Architecture
+---
 
-<!-- Document high-level architecture here as the codebase grows -->
+## Стек
+
+| Слой | Решение |
+|---|---|
+| Monorepo | Nx |
+| Фронтенд | Angular + PrimeNG |
+| Бэкенд | Nest.js |
+| База данных | PostgreSQL + Prisma |
+| Аутентификация | JWT |
+| AI | LM Studio (Gemma 4) через OpenAI-совместимый API |
+| Язык | TypeScript везде |
+
+---
+
+## Дизайн
+
+- Тема по умолчанию: **PrimeNG LaraSlate Dark**
+- Обязательна возможность переключения тем
+- Эстетика: космос, туманности, орбиты
+
+---
+
+## Методика работы (Spec-Driven Development)
+
+Каждый этап — цикл из трёх документов:
+
+1. **Design-документ** (`docs/designs/<date>-<name>.md`) — что строим и зачем
+2. **Implementation plan** (`docs/plans/<date>-<name>.md`) — пошаговый план с чекбоксами
+3. **Спецификация модуля** (`docs/specs/<module>.md`) — живое описание того что есть в коде
+
+Цикл: Design → ревью → Plan → ревью → Реализация → обновление Spec.
+
+---
+
+## Правила взаимодействия
+
+- Диалог приветствуется, встречные вопросы от Claude — нормально
+- Claude задаёт **один вопрос за раз**
+- Идеи которые нельзя взять в работу сейчас — фиксируются в `IDEA.md`
+- В начале каждой сессии: скинуть `CLAUDE.md` + актуальную спеку текущего модуля
+
+---
+
+## Текущий статус
+
+- [x] Название продукта выбрано — Voidboard
+- [x] Стек согласован
+- [x] Методика взаимодействия согласована
+- [ ] Design-документ первого этапа
+- [ ] Настройка Nx monorepo
+
+---
+
+*Обновлять после каждой завершённой сессии*
