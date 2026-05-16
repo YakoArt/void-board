@@ -1,3 +1,65 @@
-.idea/
+# Compiled output
+dist
+tmp
+out-tsc
 
+# Dependencies
+node_modules
+
+# IDEs and editors
+/.idea
+/.nx
+/.vscode
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Nx
+.nx/cache
+.nx/workspace-data
+.nx/polygraph
+.nx/self-healing
+
+# Claude
+.claude/worktrees
+.claude/settings.local.json
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Prisma
+prisma/*.db
+
+# Project notes (personal)
 IDEA.md
+.angular
+
+__screenshots__/
+
+test-output
