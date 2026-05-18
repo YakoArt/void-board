@@ -107,7 +107,7 @@
 2. **Implementation plan** (`docs/plans/YYYY-MM-DD--<topic>.md`) — пошаговый план с чекбоксами
 3. **Спецификация модуля** (`docs/specs/<module>.md`) — живое описание того что есть в коде
 
-Цикл: Design → ревью → Plan → ревью → Реализация → обновление Spec.
+Цикл: Design (через brainstorming) → ревью → Plan → ревью → Реализация → обновление Spec → simplify/review.
 
 ### Планы реализации
 
