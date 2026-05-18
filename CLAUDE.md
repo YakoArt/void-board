@@ -103,8 +103,8 @@
 
 Каждый этап — цикл из трёх документов:
 
-1. **Design-документ** (`docs/designs/<date>-<name>.md`) — что строим и зачем
-2. **Implementation plan** (`docs/plans/<date>-<name>.md`) — пошаговый план с чекбоксами
+1. **Design-документ** (`docs/designs/YYYY-MM-DD-<topic>.md`) — что строим и зачем
+2. **Implementation plan** (`docs/plans/YYYY-MM-DD--<topic>.md`) — пошаговый план с чекбоксами
 3. **Спецификация модуля** (`docs/specs/<module>.md`) — живое описание того что есть в коде
 
 Цикл: Design → ревью → Plan → ревью → Реализация → обновление Spec.
