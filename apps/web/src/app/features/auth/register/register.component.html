@@ -1,0 +1,94 @@
+<div class="vb-auth-layout">
+  <p-card class="vb-auth-card">
+    <ng-template #header>
+      <div class="vb-auth-header">
+        <h1 class="vb-auth-title">Voidboard</h1>
+        <p class="vb-auth-subtitle">Создайте аккаунт</p>
+      </div>
+    </ng-template>
+
+    @if (errorMessage()) {
+      <p-message severity="error" [text]="errorMessage()!" styleClass="vb-auth-error" />
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vb-auth-form">
+      <div class="vb-field">
+        <label for="name" class="vb-label">Имя</label>
+        <input
+          pInputText
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ваше имя"
+          class="vb-input"
+          [class.ng-invalid]="isFieldInvalid('name')"
+        />
+        @if (isFieldInvalid('name')) {
+          <small class="vb-field-error">Имя обязательно (минимум 2 символа)</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="email" class="vb-label">Email</label>
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="you@example.com"
+          class="vb-input"
+          [class.ng-invalid]="isFieldInvalid('email')"
+        />
+        @if (isFieldInvalid('email')) {
+          <small class="vb-field-error">Введите корректный email</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="password" class="vb-label">Пароль</label>
+        <p-password
+          inputId="password"
+          formControlName="password"
+          placeholder="Минимум 8 символов"
+          [toggleMask]="true"
+          styleClass="vb-password"
+          [class.ng-invalid]="isFieldInvalid('password')"
+        />
+        @if (isFieldInvalid('password')) {
+          <small class="vb-field-error">Пароль должен содержать минимум 8 символов</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="confirmPassword" class="vb-label">Подтвердите пароль</label>
+        <p-password
+          inputId="confirmPassword"
+          formControlName="confirmPassword"
+          placeholder="Повторите пароль"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="vb-password"
+          [class.ng-invalid]="isConfirmInvalid()"
+        />
+        @if (isConfirmInvalid()) {
+          <small class="vb-field-error">Пароли не совпадают</small>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        label="Зарегистрироваться"
+        [loading]="isLoading()"
+        [disabled]="form.invalid || isLoading()"
+        styleClass="vb-submit-btn"
+      />
+    </form>
+
+    <ng-template #footer>
+      <p class="vb-auth-footer">
+        Уже есть аккаунт?
+        <a routerLink="/login" class="vb-auth-link">Войти</a>
+      </p>
+    </ng-template>
+  </p-card>
+</div>

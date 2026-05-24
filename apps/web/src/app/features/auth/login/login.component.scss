@@ -1,0 +1,89 @@
+.vb-auth-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+  padding: 1rem;
+}
+
+.vb-auth-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.vb-auth-header {
+  padding: 1.5rem 1.5rem 0;
+  text-align: center;
+}
+
+.vb-auth-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--p-primary-color);
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.vb-auth-subtitle {
+  color: var(--p-text-muted-color);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.vb-auth-error {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.vb-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.vb-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.vb-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-color);
+}
+
+.vb-input {
+  width: 100%;
+}
+
+.vb-password {
+  width: 100%;
+}
+
+.vb-field-error {
+  color: var(--p-red-500);
+  font-size: 0.8rem;
+}
+
+.vb-submit-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.vb-auth-footer {
+  text-align: center;
+  margin: 0;
+  color: var(--p-text-muted-color);
+  font-size: 0.875rem;
+}
+
+.vb-auth-link {
+  color: var(--p-primary-color);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

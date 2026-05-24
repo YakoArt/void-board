@@ -1,0 +1,30 @@
+<p-toolbar styleClass="vb-header">
+  <ng-template #start>
+    <a routerLink="/" class="vb-logo">Voidboard</a>
+  </ng-template>
+
+  <ng-template #end>
+    @if (authService.isAuthenticated()) {
+      <span class="vb-username">{{ authService.currentUser()?.name }}</span>
+      <p-button
+        label="Выйти"
+        severity="secondary"
+        size="small"
+        (onClick)="onLogout()"
+      />
+    } @else {
+      <p-button
+        label="Войти"
+        severity="secondary"
+        size="small"
+        routerLink="/login"
+      />
+      <p-button
+        label="Регистрация"
+        severity="primary"
+        size="small"
+        routerLink="/register"
+      />
+    }
+  </ng-template>
+</p-toolbar>

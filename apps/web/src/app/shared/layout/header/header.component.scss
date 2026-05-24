@@ -1,0 +1,28 @@
+.vb-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--p-primary-color);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    color: var(--p-primary-hover-color);
+  }
+}
+
+.vb-username {
+  margin-right: 0.75rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.875rem;
+}
+
+:host ::ng-deep .vb-header {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+p-button + p-button {
+  margin-left: 0.5rem;
+}

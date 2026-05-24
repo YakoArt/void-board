@@ -1,0 +1,114 @@
+<div class="vb-profile-layout">
+  <div class="vb-profile-header">
+    <p-avatar
+      [label]="avatarLabel()"
+      size="xlarge"
+      shape="circle"
+      styleClass="vb-avatar"
+    />
+    <div class="vb-profile-info">
+      <h1 class="vb-profile-name">{{ authService.currentUser()?.name }}</h1>
+      <p class="vb-profile-email">{{ authService.currentUser()?.email }}</p>
+    </div>
+  </div>
+
+  <!-- Данные профиля -->
+  <p-card header="Личные данные" styleClass="vb-section-card">
+    @if (profileSuccess()) {
+      <p-message severity="success" text="Профиль обновлён" styleClass="vb-msg" />
+    }
+    @if (profileError()) {
+      <p-message severity="error" [text]="profileError()!" styleClass="vb-msg" />
+    }
+
+    <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()" class="vb-form">
+      <div class="vb-field">
+        <label for="name" class="vb-label">Имя</label>
+        <input
+          pInputText
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Ваше имя"
+          class="vb-input"
+          [class.ng-invalid]="isProfileFieldInvalid('name')"
+        />
+        @if (isProfileFieldInvalid('name')) {
+          <small class="vb-field-error">Имя должно содержать минимум 2 символа</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="avatarUrl" class="vb-label">URL аватара</label>
+        <input
+          pInputText
+          id="avatarUrl"
+          type="url"
+          formControlName="avatarUrl"
+          placeholder="https://example.com/avatar.png"
+          class="vb-input"
+        />
+      </div>
+
+      <p-button
+        type="submit"
+        label="Сохранить"
+        [loading]="profileLoading()"
+        [disabled]="profileForm.invalid || profileLoading()"
+      />
+    </form>
+  </p-card>
+
+  <p-divider />
+
+  <!-- Смена пароля -->
+  <p-card header="Смена пароля" styleClass="vb-section-card">
+    @if (passwordSuccess()) {
+      <p-message severity="success" text="Пароль изменён" styleClass="vb-msg" />
+    }
+    @if (passwordError()) {
+      <p-message severity="error" [text]="passwordError()!" styleClass="vb-msg" />
+    }
+
+    <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()" class="vb-form">
+      <div class="vb-field">
+        <label for="currentPassword" class="vb-label">Текущий пароль</label>
+        <p-password
+          inputId="currentPassword"
+          formControlName="currentPassword"
+          placeholder="Текущий пароль"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="vb-password"
+          [class.ng-invalid]="isPasswordFieldInvalid('currentPassword')"
+        />
+        @if (isPasswordFieldInvalid('currentPassword')) {
+          <small class="vb-field-error">Введите текущий пароль</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="newPassword" class="vb-label">Новый пароль</label>
+        <p-password
+          inputId="newPassword"
+          formControlName="newPassword"
+          placeholder="Минимум 8 символов"
+          [toggleMask]="true"
+          styleClass="vb-password"
+          [class.ng-invalid]="isPasswordFieldInvalid('newPassword')"
+        />
+        @if (isPasswordFieldInvalid('newPassword')) {
+          <small class="vb-field-error">Пароль должен содержать минимум 8 символов</small>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        label="Изменить пароль"
+        severity="secondary"
+        [loading]="passwordLoading()"
+        [disabled]="passwordForm.invalid || passwordLoading()"
+      />
+    </form>
+  </p-card>
+</div>
