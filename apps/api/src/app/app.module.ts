@@ -4,9 +4,10 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from '../auth/auth.module.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
-import { UsersModule } from '../users/users.module.js';
 import { validate } from '../config/env.validation.js';
 import { PrismaModule } from '../prisma/prisma.module.js';
+import { ProjectsModule } from '../projects/projects.module.js';
+import { UsersModule } from '../users/users.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -37,6 +38,9 @@ import { AppService } from './app.service.js';
 
     // Управление профилем пользователя
     UsersModule,
+
+    // Проекты: CRUD-операции над проектами текущего пользователя
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [

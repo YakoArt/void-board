@@ -1,0 +1,85 @@
+<div class="vb-project-list-layout">
+  <div class="vb-project-list-header">
+    <h1 class="vb-page-title">Проекты</h1>
+    @if (!isLoading() && !errorMessage()) {
+      <p-button
+        label="Создать проект"
+        icon="pi pi-plus"
+        routerLink="/projects/new"
+      />
+    }
+  </div>
+
+  <!-- Загрузка -->
+  @if (isLoading()) {
+    <div class="vb-spinner-container">
+      <p-progressSpinner
+        strokeWidth="3"
+        styleClass="vb-spinner"
+        ariaLabel="Загрузка проектов"
+      />
+    </div>
+  }
+
+  <!-- Ошибка -->
+  @if (!isLoading() && errorMessage()) {
+    <div class="vb-error-container">
+      <p-message
+        severity="error"
+        [text]="errorMessage()!"
+        styleClass="vb-error-msg"
+      />
+      <p-button
+        label="Повторить"
+        severity="secondary"
+        icon="pi pi-refresh"
+        (onClick)="onRetry()"
+        styleClass="vb-retry-btn"
+      />
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (!isLoading() && !errorMessage() && projects().length === 0) {
+    <div class="vb-empty-state">
+      <div class="vb-empty-icon">
+        <i class="pi pi-folder-open"></i>
+      </div>
+      <h2 class="vb-empty-title">У вас пока нет проектов</h2>
+      <p class="vb-empty-subtitle">Создайте первый проект и начните отслеживать задачи</p>
+      <p-button
+        label="Создать первый проект"
+        icon="pi pi-plus"
+        routerLink="/projects/new"
+      />
+    </div>
+  }
+
+  <!-- Список проектов -->
+  @if (!isLoading() && !errorMessage() && projects().length > 0) {
+    <div class="vb-projects-grid">
+      @for (project of projects(); track project.id) {
+        <a [routerLink]="['/projects', project.slug]" class="vb-project-card-link">
+          <p-card styleClass="vb-project-card">
+            <div class="vb-project-card-content">
+              <h2 class="vb-project-name">{{ project.name }}</h2>
+              @if (project.description) {
+                <p class="vb-project-description">
+                  {{ truncateDescription(project.description) }}
+                </p>
+              } @else {
+                <p class="vb-project-description vb-project-description--empty">
+                  Без описания
+                </p>
+              }
+              <p class="vb-project-date">
+                <i class="pi pi-calendar"></i>
+                {{ formatDate(project.createdAt) }}
+              </p>
+            </div>
+          </p-card>
+        </a>
+      }
+    </div>
+  }
+</div>

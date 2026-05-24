@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
-/** Пропускает только гостей (неаутентифицированных). Залогиненных — на / */
+/** Пропускает только гостей (неаутентифицированных). Залогиненных — на /projects */
 export const guestGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -11,5 +11,5 @@ export const guestGuard: CanActivateFn = () => {
     return true;
   }
 
-  return router.createUrlTree(['/profile']);
+  return router.createUrlTree(['/projects']);
 };

@@ -1,0 +1,150 @@
+.vb-project-list-layout {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Шапка страницы */
+.vb-project-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.vb-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--p-text-color);
+}
+
+/* Спиннер загрузки */
+.vb-spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.vb-spinner {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Ошибка */
+.vb-error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.vb-error-msg {
+  width: 100%;
+}
+
+/* Empty state */
+.vb-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 1rem;
+  text-align: center;
+}
+
+.vb-empty-icon {
+  font-size: 4rem;
+  color: var(--p-text-muted-color);
+  opacity: 0.5;
+
+  .pi {
+    font-size: inherit;
+  }
+}
+
+.vb-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--p-text-color);
+}
+
+.vb-empty-subtitle {
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--p-text-muted-color);
+  max-width: 400px;
+}
+
+/* Сетка проектов */
+.vb-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+/* Карточка проекта */
+.vb-project-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  &:hover .vb-project-card {
+    border-color: var(--p-primary-color);
+    transform: translateY(-2px);
+  }
+}
+
+.vb-project-card {
+  height: 100%;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.vb-project-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 120px;
+}
+
+.vb-project-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--p-text-color);
+  line-height: 1.4;
+}
+
+.vb-project-description {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--p-text-muted-color);
+  line-height: 1.5;
+  flex: 1;
+
+  &--empty {
+    font-style: italic;
+    opacity: 0.6;
+  }
+}
+
+.vb-project-date {
+  font-size: 0.8rem;
+  margin: 0;
+  color: var(--p-text-muted-color);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+
+  .pi {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+}

@@ -1,0 +1,72 @@
+<div class="vb-form-layout">
+  @if (isLoading()) {
+    <div class="vb-loading">
+      <p-progressSpinner strokeWidth="3" />
+    </div>
+  } @else {
+    <p-card class="vb-form-card">
+      <ng-template #header>
+        <div class="vb-form-header">
+          <h1 class="vb-form-title">Редактирование проекта</h1>
+        </div>
+      </ng-template>
+
+      @if (errorMessage()) {
+        <p-message severity="error" [text]="errorMessage()!" styleClass="vb-form-error" />
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vb-form">
+        <div class="vb-field">
+          <label for="name" class="vb-label">Название</label>
+          <input
+            pInputText
+            id="name"
+            formControlName="name"
+            placeholder="Название проекта"
+            class="vb-input"
+            [class.ng-invalid]="isFieldInvalid('name')"
+          />
+          @if (isFieldInvalid('name')) {
+            <small class="vb-field-error">
+              @if (form.get('name')?.errors?.['required']) {
+                Название обязательно
+              } @else if (form.get('name')?.errors?.['maxlength']) {
+                Максимум 100 символов
+              }
+            </small>
+          }
+        </div>
+
+        <div class="vb-field">
+          <label for="description" class="vb-label">Описание</label>
+          <textarea
+            pTextarea
+            id="description"
+            formControlName="description"
+            placeholder="Описание проекта (необязательно)"
+            rows="4"
+            class="vb-input"
+            [class.ng-invalid]="isFieldInvalid('description')"
+          ></textarea>
+          @if (isFieldInvalid('description')) {
+            <small class="vb-field-error">Максимум 2000 символов</small>
+          }
+        </div>
+
+        <div class="vb-form-actions">
+          <p-button
+            type="submit"
+            label="Сохранить"
+            [loading]="isSaving()"
+            [disabled]="form.invalid || isSaving()"
+          />
+          <p-button
+            label="Отмена"
+            severity="secondary"
+            [routerLink]="['/projects', slug]"
+          />
+        </div>
+      </form>
+    </p-card>
+  }
+</div>

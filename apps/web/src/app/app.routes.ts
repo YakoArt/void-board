@@ -28,12 +28,46 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'projects',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/projects/project-list/project-list.component').then(
+        (m) => m.ProjectListComponent,
+      ),
+  },
+  {
+    // Маршрут /projects/new должен быть ПЕРЕД /projects/:slug,
+    // иначе "new" будет интерпретирован как slug
+    path: 'projects/new',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/projects/project-create/project-create.component').then(
+        (m) => m.ProjectCreateComponent,
+      ),
+  },
+  {
+    path: 'projects/:slug',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/projects/project-detail/project-detail.component').then(
+        (m) => m.ProjectDetailComponent,
+      ),
+  },
+  {
+    path: 'projects/:slug/edit',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/projects/project-edit/project-edit.component').then(
+        (m) => m.ProjectEditComponent,
+      ),
+  },
+  {
     path: '',
-    redirectTo: '/profile',
+    redirectTo: '/projects',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: '/profile',
+    redirectTo: '/projects',
   },
 ];
