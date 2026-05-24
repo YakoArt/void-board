@@ -1,0 +1,44 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="vb-detail-layout">
+  @if (isLoading()) {
+    <div class="vb-loading">
+      <p-progressSpinner strokeWidth="3" />
+    </div>
+  } @else if (project(); as project) {
+    <div class="vb-detail-header">
+      <div class="vb-detail-info">
+        <h1 class="vb-detail-title">{{ project.name }}</h1>
+        @if (project.description) {
+          <p class="vb-detail-description">{{ project.description }}</p>
+        }
+        <small class="vb-detail-date">Создан {{ formatDate(project.createdAt) }}</small>
+      </div>
+      <div class="vb-detail-actions">
+        <p-button
+          label="Редактировать"
+          severity="secondary"
+          [routerLink]="['/projects', project.slug, 'edit']"
+        />
+        <p-button
+          label="Удалить"
+          severity="danger"
+          (onClick)="onDelete()"
+        />
+      </div>
+    </div>
+
+    <div class="vb-detail-content">
+      <p-card>
+        <div class="vb-issues-placeholder">
+          <p>Пока нет issues — они появятся на следующем этапе</p>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="vb-detail-footer">
+      <a routerLink="/projects" class="vb-back-link">← Назад к проектам</a>
+    </div>
+  }
+</div>

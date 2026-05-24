@@ -5,6 +5,7 @@
 
   <ng-template #end>
     @if (authService.isAuthenticated()) {
+      <a routerLink="/projects" class="vb-nav-link">Проекты</a>
       <span class="vb-username">{{ authService.currentUser()?.name }}</span>
       <p-button
         label="Выйти"

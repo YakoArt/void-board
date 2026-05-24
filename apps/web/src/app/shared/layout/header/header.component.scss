@@ -10,6 +10,18 @@
   }
 }
 
+.vb-nav-link {
+  color: var(--p-text-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-right: 0.75rem;
+
+  &:hover {
+    color: var(--p-primary-color);
+  }
+}
+
 .vb-username {
   margin-right: 0.75rem;
   color: var(--p-text-muted-color);

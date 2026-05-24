@@ -1,0 +1,68 @@
+<div class="vb-create-layout">
+  <p-card class="vb-create-card">
+    <ng-template #header>
+      <div class="vb-create-header">
+        <h1 class="vb-create-title">Новый проект</h1>
+        <p class="vb-create-subtitle">Заполните данные проекта</p>
+      </div>
+    </ng-template>
+
+    @if (errorMessage()) {
+      <p-message
+        severity="error"
+        [text]="errorMessage()!"
+        styleClass="vb-create-error"
+      />
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vb-create-form">
+      <div class="vb-field">
+        <label for="name" class="vb-label">Название <span class="vb-required">*</span></label>
+        <input
+          pInputText
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Мой проект"
+          class="vb-input"
+          [class.ng-invalid]="isFieldInvalid('name')"
+        />
+        @if (isFieldInvalid('name')) {
+          @if (form.get('name')?.hasError('required')) {
+            <small class="vb-field-error">Название обязательно</small>
+          } @else if (form.get('name')?.hasError('maxlength')) {
+            <small class="vb-field-error">Название не может превышать 100 символов</small>
+          }
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="description" class="vb-label">Описание</label>
+        <textarea
+          pTextarea
+          id="description"
+          formControlName="description"
+          placeholder="Краткое описание проекта (необязательно)"
+          rows="4"
+          class="vb-textarea"
+          [class.ng-invalid]="isFieldInvalid('description')"
+          [autoResize]="true"
+        ></textarea>
+        @if (isFieldInvalid('description')) {
+          <small class="vb-field-error">Описание не может превышать 2000 символов</small>
+        }
+      </div>
+
+      <div class="vb-create-actions">
+        <p-button
+          type="submit"
+          label="Создать проект"
+          [loading]="isLoading()"
+          [disabled]="form.invalid || isLoading()"
+          styleClass="vb-submit-btn"
+        />
+        <a routerLink="/projects" class="vb-cancel-link">Назад к проектам</a>
+      </div>
+    </form>
+  </p-card>
+</div>

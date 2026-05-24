@@ -1,0 +1,74 @@
+.vb-detail-layout {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.vb-loading {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+.vb-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.vb-detail-info {
+  flex: 1;
+}
+
+.vb-detail-title {
+  margin: 0 0 0.5rem;
+  color: var(--p-text-color);
+}
+
+.vb-detail-description {
+  color: var(--p-text-muted-color);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.vb-detail-date {
+  color: var(--p-text-muted-color);
+  font-size: 0.8rem;
+}
+
+.vb-detail-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.vb-detail-content {
+  margin-bottom: 2rem;
+}
+
+.vb-issues-placeholder {
+  text-align: center;
+  padding: 2rem;
+  color: var(--p-text-muted-color);
+
+  p {
+    margin: 0;
+  }
+}
+
+.vb-detail-footer {
+  padding-top: 1rem;
+}
+
+.vb-back-link {
+  color: var(--p-text-muted-color);
+  text-decoration: none;
+  font-size: 0.875rem;
+
+  &:hover {
+    color: var(--p-primary-color);
+    text-decoration: underline;
+  }
+}
