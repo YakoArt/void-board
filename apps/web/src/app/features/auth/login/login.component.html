@@ -1,0 +1,63 @@
+<div class="vb-auth-layout">
+  <p-card class="vb-auth-card">
+    <ng-template #header>
+      <div class="vb-auth-header">
+        <h1 class="vb-auth-title">Voidboard</h1>
+        <p class="vb-auth-subtitle">Войдите в аккаунт</p>
+      </div>
+    </ng-template>
+
+    @if (errorMessage()) {
+      <p-message severity="error" [text]="errorMessage()!" styleClass="vb-auth-error" />
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vb-auth-form">
+      <div class="vb-field">
+        <label for="email" class="vb-label">Email</label>
+        <input
+          pInputText
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="you@example.com"
+          class="vb-input"
+          [class.ng-invalid]="isFieldInvalid('email')"
+        />
+        @if (isFieldInvalid('email')) {
+          <small class="vb-field-error">Введите корректный email</small>
+        }
+      </div>
+
+      <div class="vb-field">
+        <label for="password" class="vb-label">Пароль</label>
+        <p-password
+          inputId="password"
+          formControlName="password"
+          placeholder="Введите пароль"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="vb-password"
+          [class.ng-invalid]="isFieldInvalid('password')"
+        />
+        @if (isFieldInvalid('password')) {
+          <small class="vb-field-error">Пароль обязателен</small>
+        }
+      </div>
+
+      <p-button
+        type="submit"
+        label="Войти"
+        [loading]="isLoading()"
+        [disabled]="form.invalid || isLoading()"
+        styleClass="vb-submit-btn"
+      />
+    </form>
+
+    <ng-template #footer>
+      <p class="vb-auth-footer">
+        Нет аккаунта?
+        <a routerLink="/register" class="vb-auth-link">Зарегистрироваться</a>
+      </p>
+    </ng-template>
+  </p-card>
+</div>
