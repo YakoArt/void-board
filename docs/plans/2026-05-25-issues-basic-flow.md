@@ -24,8 +24,8 @@
 
 **Скиллы:** —
 
-- [ ] Установить `@angular/cdk` (`npm install @angular/cdk` в корне monorepo)
-- [ ] Убедиться, что версия совместима с текущей версией Angular в `package.json`
+- [ ] Установить `@angular/cdk@^21` (`npm install @angular/cdk@^21` в корне monorepo) — версия должна соответствовать Angular 21.2.0 в проекте
+- [ ] Убедиться, что установленная версия совместима: `npm ls @angular/cdk`
 
 **Файлы:** `package.json`, `package-lock.json`
 
@@ -40,7 +40,7 @@
 **Скиллы:** `nestjs-best-practices`
 
 - [ ] Создать `apps/api/src/issues/dto/create-issue.dto.ts` — class-validator: `title` (IsString, IsNotEmpty, MaxLength(200)), `description` (IsOptional, IsString), `priority` (IsOptional, IsEnum(IssuePriority)), `status` (IsOptional, IsEnum(IssueStatus))
-- [ ] Создать `apps/api/src/issues/dto/update-issue.dto.ts` — все поля опциональные, `description` допускает `null` (ValidateIf)
+- [ ] Создать `apps/api/src/issues/dto/update-issue.dto.ts` — все поля опциональные, `description` допускает `null` (`@IsOptional()`, `@ValidateIf((o) => o.description !== null)` + `@IsString()` — чтобы принимать и `string`, и `null`, но не другие типы)
 - [ ] Создать `apps/api/src/issues/dto/issue-response.dto.ts` — interface `IssueResponse` с полями: id, number, title, description, status, priority, reporter: { id, name }, closedAt, createdAt, updatedAt
 
 **Файлы:** `apps/api/src/issues/dto/create-issue.dto.ts`, `apps/api/src/issues/dto/update-issue.dto.ts`, `apps/api/src/issues/dto/issue-response.dto.ts`
@@ -51,7 +51,7 @@
 
 - [ ] Создать `apps/api/src/issues/issues.service.ts`:
   - Инжектировать `PrismaService` и `ProjectsService`
-  - `create(userId, slug, dto)` — найти проект через `ProjectsService`, в `$transaction`: получить max number + создать Issue с reporter = userId
+  - `create(userId, slug, dto)` — найти проект через `ProjectsService` (возвращает DTO с `id`), в `$transaction`: получить max number (`findFirst` + `orderBy: { number: 'desc' }`) + создать Issue с `number = max + 1` (или `1` если первый), reporter = userId. **Защита от гонки:** `@@unique([projectId, number])` constraint — страховка; при конфликте Prisma бросит `P2002`, обернуть в try/catch с retry (1–2 попытки)
   - `findAll(userId, slug)` — найти проект, вернуть все Issues с `include: { reporter: { select: { id, name } } }`, сортировка `createdAt: 'desc'`
   - `findOne(userId, slug, number)` — найти проект, найти Issue по `{ projectId, number }`, include reporter
   - `update(userId, slug, number, dto)` — найти проект, найти Issue, логика closedAt (если status меняется на done — ставим closedAt, если уходит из done — сбрасываем), обновить
@@ -119,12 +119,12 @@
   - Инжектировать `IssuesService`, `MessageService`, `Router`
   - Signals: `issues`, `isLoading`, `errorMessage`
   - `computed()` для группировки issues по статусам (5 колонок)
-  - CDK DragDrop: `cdkDropListGroup`, `cdkDropList` на каждой колонке, `cdkDrag` на карточках
+  - CDK DragDrop: импортировать standalone-директивы `CdkDropListGroup`, `CdkDropList`, `CdkDrag` напрямую (НЕ `DragDropModule`), использовать в шаблоне как `cdkDropListGroup`, `cdkDropList` на каждой колонке, `cdkDrag` на карточках
   - `onDrop(event)` — оптимистичный UI: переместить карточку в массиве, вызвать `updateIssue` с новым status, при ошибке — откатить + toast
   - Кнопка «+ New Issue» → навигация на `/projects/:slug/issues/new`
 - [ ] Создать `issue-board.component.html` — 5 колонок с заголовками и счётчиками, карточки через `@for`, пустое состояние, спиннер загрузки, сообщение об ошибке
 - [ ] Создать `issue-board.component.scss` — grid/flex layout колонок (равные доли), стили колонок с цветовыми акцентами, горизонтальный скролл, CDK drag-drop визуальные стили (placeholder, preview)
-- [ ] Встроить `IssueBoardComponent` в `project-detail.component.html` — заменить блок `vb-issues-placeholder` на `<app-issue-board [slug]="project.slug" />`
+- [ ] Встроить `IssueBoardComponent` в `project-detail.component.html` — заменить блок `vb-issues-placeholder` на `<app-issue-board [slug]="project()!.slug" />` (учесть, что `project` — signal, нужен вызов `project()` в шаблоне)
 - [ ] Добавить импорт `IssueBoardComponent` в `project-detail.component.ts`
 
 **Файлы:** `apps/web/src/app/features/issues/issue-board/issue-board.component.ts`, `apps/web/src/app/features/issues/issue-board/issue-board.component.html`, `apps/web/src/app/features/issues/issue-board/issue-board.component.scss`, `apps/web/src/app/features/projects/project-detail/project-detail.component.html`, `apps/web/src/app/features/projects/project-detail/project-detail.component.ts`
@@ -142,7 +142,7 @@
   - `onCancel()` → навигация назад на `/projects/:slug`
 - [ ] Создать `issue-create.component.html` — форма с `p-inputText`, `p-textarea` (autoResize), `p-select` для priority и status, inline-ошибки, кнопки «Создать» и «Отмена»
 - [ ] Создать `issue-create.component.scss` — стили формы (паттерн из project-create)
-- [ ] Добавить роут `/projects/:slug/issues/new` в `app.routes.ts` — **до** роута `/:slug/issues/:number`, lazy-load через `loadComponent`
+- [ ] Добавить роут `/projects/:slug/issues/new` в `app.routes.ts` — **до** роута `projects/:slug` (и до будущего `/:slug/issues/:number`), lazy-load через `loadComponent`
 
 **Файлы:** `apps/web/src/app/features/issues/issue-create/issue-create.component.ts`, `apps/web/src/app/features/issues/issue-create/issue-create.component.html`, `apps/web/src/app/features/issues/issue-create/issue-create.component.scss`, `apps/web/src/app/app.routes.ts`
 
@@ -162,7 +162,7 @@
   - Обработка 404 — редирект на доску + toast
 - [ ] Создать `issue-detail.component.html` — два режима (просмотр/редактирование), заголовок `#N — Title`, бейджи status и priority, description, reporter, даты, кнопки действий, `p-confirmDialog`
 - [ ] Создать `issue-detail.component.scss` — стили детального просмотра (паттерн из project-detail)
-- [ ] Добавить роут `/projects/:slug/issues/:number` в `app.routes.ts` — **после** роута `issues/new`, lazy-load
+- [ ] Добавить роут `/projects/:slug/issues/:number` в `app.routes.ts` — **после** роута `issues/new`, но **до** роута `projects/:slug`, lazy-load. Итоговый порядок: `projects/:slug/issues/new` → `projects/:slug/issues/:number` → `projects/:slug/edit` → `projects/:slug`
 
 **Файлы:** `apps/web/src/app/features/issues/issue-detail/issue-detail.component.ts`, `apps/web/src/app/features/issues/issue-detail/issue-detail.component.html`, `apps/web/src/app/features/issues/issue-detail/issue-detail.component.scss`, `apps/web/src/app/app.routes.ts`
 
@@ -195,7 +195,7 @@
 | `app.routes.ts` (frontend) | 3.3, 3.4 | ⚠️ Обе добавляют роуты |
 | `project-detail.component.*` | 3.2 | Нет (единственная) |
 
-**Решение конфликта `app.routes.ts`:** Задача 3.3 добавляет роут `issues/new`, задача 3.4 добавляет роут `issues/:number`. Обе задачи редактируют один файл. **Задача 3.4 зависит от 3.3** (роут `new` должен быть до `:number`), поэтому 3.4 добавляет свой роут после того, как 3.3 уже добавила свой. Альтернатива: объединить обе задачи в одну — но они достаточно независимы по компонентам, конфликт только в одной строке роутов. **Рекомендация:** задача 3.4 добавляет роут после завершения 3.3, либо лид добавляет оба роута сам перед стартом фазы 3.
+**Решение конфликта `app.routes.ts`:** Задача 3.3 добавляет роут `issues/new`, задача 3.4 добавляет роут `issues/:number`. Обе задачи редактируют один файл. **Задача 3.4 зависит от 3.3** (роут `new` должен быть до `:number`), поэтому 3.4 добавляет свой роут после того, как 3.3 уже добавила свой. **Критично:** оба issues-роута должны стоять **до** `projects/:slug`, иначе Angular сматчит `:slug` раньше. Итоговый порядок: `projects/new` → `projects/:slug/issues/new` → `projects/:slug/issues/:number` → `projects/:slug/edit` → `projects/:slug`. **Рекомендация:** лид добавляет оба роута сам перед стартом фазы 3, чтобы избежать конфликта и гарантировать порядок.
 
 ---
 
